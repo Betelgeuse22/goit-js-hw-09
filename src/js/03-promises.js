@@ -23,20 +23,20 @@ function createPromise(position, delay) {
 
 refs.form.addEventListener('submit', onCreatePromises);
 
-function onCreatePromises(e) {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
+function onCreatePromises(evt) {
+  evt.preventDefault();
+  const formData = new FormData(evt.currentTarget);
   const dataParams = {};
 
   for (const [key, value] of formData.entries()) {
     dataParams[key] = Number(value);
   }
 
-  let { amount, step, delay } = dataParams;
+  let { delay, step, amount } = dataParams;
 
   for (let i = 1; i <= amount; i += 1) {
-    delay += step;
     createPromise(i, delay).then(onSuccess).catch(onError);
+    delay += step;
 
     refs.form.reset();
   }
